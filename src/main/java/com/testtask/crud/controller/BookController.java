@@ -4,9 +4,10 @@ import com.testtask.crud.model.Book;
 import com.testtask.crud.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 public class BookController {
@@ -14,11 +15,25 @@ public class BookController {
 
     private BookRepository bookRepository;
 
+    // WORK  ====================================================================
+    @RequestMapping("/")
+    ModelAndView index(ModelAndView modelAndView) {
+        modelAndView.setViewName("/index");
+        return modelAndView;
+    }
+
 
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Book> getFindAll() {
         // This returns a JSON or XML with the books
         return bookRepository.findAll();
+    }
+
+    @RequestMapping(value= "/search/{part}", method = RequestMethod.GET)
+    public @ResponseBody
+    List<Book> getBooksByPartData(@PathVariable("part") String part) {
+        // This returns a JSON or XML with the books
+        return bookRepository.getBooksByPartData(part);
     }
 
 
@@ -68,22 +83,21 @@ public class BookController {
     }
 
 
-    @RequestMapping("/")
-    ModelAndView index(ModelAndView modelAndView) {
-        modelAndView.setViewName("/_index");
-        return modelAndView;
-    }
 
-    @RequestMapping("/viewstyle")
+
+    // readonly  ====================================================================
+    @RequestMapping("/readonly")
     ModelAndView viewstyle(ModelAndView modelAndView) {
-        modelAndView.setViewName("/datatables");
+        modelAndView.setViewName("/readonly");
         return modelAndView;
     }
 
-    // WORK ====================================================================
-    @RequestMapping("/v2")
+
+
+    // SIMPLESTYLE  ====================================================================
+    @RequestMapping("/simplestyle")
     ModelAndView index2(ModelAndView modelAndView) {
-        modelAndView.setViewName("/index");
+        modelAndView.setViewName("/simplestyle");
         return modelAndView;
     }
 

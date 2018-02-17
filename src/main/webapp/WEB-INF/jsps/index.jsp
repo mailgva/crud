@@ -4,9 +4,10 @@
 <head>
     <title>Books</title>
      <meta charset="UTF-8">
+     <style>body { padding:20px; }</style>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
      <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" /> -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.js"></script>
@@ -15,25 +16,28 @@
         <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
 
 
-    <script src="/js/angdemo.js?v=219"></script>
+    <script src="/js/angular.js?v=223"></script>
 </head>
 <body>
   <h3>List of Books</h3>
-  <a href="/viewstyle"  class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Only View</a>
+  <a href="/readonly"  class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Only View</a>
+ <!-- <a href="/simplestyle"  class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Simple style</a> -->
   <a href="/edit/0"     class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Add new book</a>
         <div class="container" ng-app="app">
           <div ng-controller="getallbooksController" class="col-md-3" ng-init="getAllBooks()">
-            <button ng-click="getAllBooks()" type="button" class="btn btn-primary btn-xs">Refresh</button>
-
+            <button ng-click="getAllBooks()" type="button" class="btn btn-primary btn-xs">Refresh</button><br />
+            <label>Search: </label>
+            <input type="text" style="250px;" ng-model="searchData">
+            <button ng-click="getBooksByPartData()" type="button" class="btn btn-primary btn-xs">Ok</button>
                 <table class="table table-striped table-condensed table-hover">
                 <thead>
 
                     <tr>
-                        <th class="title" custom-sort order="'title'" sort="sort">Name&nbsp;</th>
+                        <th class="title" custom-sort order="'title'" sort="sort">Title&nbsp;</th>
                         <th class="description" custom-sort order="'description'" sort="sort">Description&nbsp;</th>
-                        <th class="author" custom-sort order="'author'" sort="sort">Author &nbsp;</th>
-                        <th class="isbn" custom-sort order="'isbn'" sort="sort">ISBN &nbsp;</th>
-                        <th class="printYear" custom-sort order="'printYear'" sort="sort">Year &nbsp;</th>
+                        <th class="author" custom-sort order="'author'" sort="sort">Author&nbsp;</th>
+                        <th class="isbn" custom-sort order="'isbn'" sort="sort">ISBN&nbsp;</th>
+                        <th class="printYear" custom-sort order="'printYear'" sort="sort">Year&nbsp;</th>
                         <th >Options &nbsp;</th>
 
                     </tr>

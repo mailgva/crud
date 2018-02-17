@@ -2,16 +2,20 @@
 <html ng-app="app">
 <head>
     <meta charset="UTF-8">
-    <title>Book CRUD</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    <title>Simple style</title>
+    <style>body { padding:20px; }</style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
-    <script src="/js/angular_sample.js?v=4"></script>
+    <script src="/js/angularsimp.js?v=4"></script>
 
 </head>
 <body>
+<h3>Simple style</h3>
+<a href="/" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Back to Editable style</a>
+<br />
 <div class="container" ng-app="app">
     <div ng-controller="BookCRUDCtrl">
     <table>

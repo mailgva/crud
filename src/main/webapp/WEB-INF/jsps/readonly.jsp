@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Books</title>
+    <title>Only View</title>
+    <style>body { padding:20px; }</style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="/js/scripts.js"></script>
 
-    <link rel="stylesheet"
-          href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
 
@@ -15,8 +15,9 @@
 
 </head>
 <body>
-<h3>List of Books</h3>
+<h3>Read only</h3>
 <a href="/" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Back to Editable style</a>
+<br />
 <table id="myTable" class="display" cellspacing="0" width="96%">
     <thead>
             <tr>

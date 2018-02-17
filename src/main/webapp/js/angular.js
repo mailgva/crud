@@ -1,8 +1,126 @@
-var app = angular.module("app", ["ngTable"]);
+var app = angular.module("app", []);
+app.controller('getallbooksController', function($scope, $http, $location, $filter) {
+
+    $scope.getBooksByPartData = function() {
+            var url = $location.absUrl() + "search/" + $scope.searchData ;
+
+            var config = {
+                headers : {
+                    'Content-Type' : 'application/json;charset=utf-8;'
+                }
+            }
+
+            $http.get(url, config).then(function(response) {
+                if (response != null) {
+                    $scope.allBooks = response.data;
+
+                        // inserted script ====================================
+                            // init
+                                $scope.sort = {
+                                            sortingOrder : '',
+                                            reverse : false
+                                        };
 
 
-app.controller('getallbooksController', function($scope, $http, $location) {
-    $scope.showAllBooks = false;
+
+                                $scope.gap = parseInt($scope.allBooks.length / 10) + ($scope.allBooks.length % 10  == 0 ? 0 : 1);
+
+
+                                $scope.filteredItems = [];
+                                $scope.groupedItems = [];
+                                $scope.itemsPerPage = 10;
+                                $scope.pagedItems = [];
+                                $scope.currentPage = 0;
+                                $scope.items = $scope.allBooks;
+
+                                var searchMatch = function (haystack, needle) {
+                                    if (!needle) {
+                                        return true;
+                                    }
+                                    return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+                                };
+
+                                // init the filtered items
+                                $scope.search = function () {
+                                    $scope.filteredItems = $filter('filter')($scope.items, function (item) {
+                                        for(var attr in item) {
+                                            if (searchMatch(item[attr], $scope.query))
+                                                return true;
+                                        }
+                                        return false;
+                                    });
+                                    // take care of the sorting order
+                                    if ($scope.sort.sortingOrder !== '') {
+                                        $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sort.sortingOrder, $scope.sort.reverse);
+                                    }
+                                    $scope.currentPage = 0;
+                                    // now group by pages
+                                    $scope.groupToPages();
+                                };
+
+
+                                // calculate page in place
+                                $scope.groupToPages = function () {
+                                    $scope.pagedItems = [];
+
+                                    for (var i = 0; i < $scope.filteredItems.length; i++) {
+                                        if (i % $scope.itemsPerPage === 0) {
+                                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                                        } else {
+                                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                                        }
+                                    }
+                                };
+
+                                $scope.range = function (size,start, end) {
+                                    var ret = [];
+                                    console.log(size,start, end);
+
+                                    if (size < end) {
+                                        end = size;
+                                        start = size-$scope.gap;
+                                    }
+                                    for (var i = start; i < end; i++) {
+                                        ret.push(i);
+                                    }
+                                     console.log(ret);
+                                    return ret;
+                                };
+
+                                $scope.prevPage = function () {
+                                    if ($scope.currentPage > 0) {
+                                        $scope.currentPage--;
+                                    }
+                                };
+
+                                $scope.nextPage = function () {
+                                    if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                                        $scope.currentPage++;
+                                    }
+                                };
+
+                                $scope.setPage = function () {
+                                    $scope.currentPage = this.n;
+                                };
+
+                                // functions have been describe process the data for display
+                                $scope.search();
+                    // end inserted script
+
+
+                } else {
+                    $scope.getResultMessage = "get All Books Data Error!";
+                }
+
+            }, function(response) {
+                $scope.getResultMessage = "Fail!";
+            });
+
+        }
+
+
+
+
 
     $scope.getAllBooks = function() {
         var url = $location.absUrl() + "all";
@@ -16,7 +134,100 @@ app.controller('getallbooksController', function($scope, $http, $location) {
         $http.get(url, config).then(function(response) {
             if (response != null) {
                 $scope.allBooks = response.data;
-                $scope.showAllBooks = true;
+
+                    // inserted script ====================================
+                        // init
+                            $scope.sort = {
+                                        sortingOrder : '',
+                                        reverse : false
+                                    };
+
+
+
+                            $scope.gap = parseInt($scope.allBooks.length / 10) + ($scope.allBooks.length % 10  == 0 ? 0 : 1);
+
+
+                            $scope.filteredItems = [];
+                            $scope.groupedItems = [];
+                            $scope.itemsPerPage = 10;
+                            $scope.pagedItems = [];
+                            $scope.currentPage = 0;
+                            $scope.items = $scope.allBooks;
+
+                            var searchMatch = function (haystack, needle) {
+                                if (!needle) {
+                                    return true;
+                                }
+                                return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+                            };
+
+                            // init the filtered items
+                            $scope.search = function () {
+                                $scope.filteredItems = $filter('filter')($scope.items, function (item) {
+                                    for(var attr in item) {
+                                        if (searchMatch(item[attr], $scope.query))
+                                            return true;
+                                    }
+                                    return false;
+                                });
+                                // take care of the sorting order
+                                if ($scope.sort.sortingOrder !== '') {
+                                    $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sort.sortingOrder, $scope.sort.reverse);
+                                }
+                                $scope.currentPage = 0;
+                                // now group by pages
+                                $scope.groupToPages();
+                            };
+
+
+                            // calculate page in place
+                            $scope.groupToPages = function () {
+                                $scope.pagedItems = [];
+
+                                for (var i = 0; i < $scope.filteredItems.length; i++) {
+                                    if (i % $scope.itemsPerPage === 0) {
+                                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                                    } else {
+                                        $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                                    }
+                                }
+                            };
+
+                            $scope.range = function (size,start, end) {
+                                var ret = [];
+                                console.log(size,start, end);
+
+                                if (size < end) {
+                                    end = size;
+                                    start = size-$scope.gap;
+                                }
+                                for (var i = start; i < end; i++) {
+                                    ret.push(i);
+                                }
+                                 console.log(ret);
+                                return ret;
+                            };
+
+                            $scope.prevPage = function () {
+                                if ($scope.currentPage > 0) {
+                                    $scope.currentPage--;
+                                }
+                            };
+
+                            $scope.nextPage = function () {
+                                if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                                    $scope.currentPage++;
+                                }
+                            };
+
+                            $scope.setPage = function () {
+                                $scope.currentPage = this.n;
+                            };
+
+                            // functions have been describe process the data for display
+                            $scope.search();
+                // end inserted script
+
 
             } else {
                 $scope.getResultMessage = "get All Books Data Error!";
@@ -27,122 +238,51 @@ app.controller('getallbooksController', function($scope, $http, $location) {
         });
 
     }
-});
-/*
-app.controller('postController', function($scope, $http, $location) {
-    $scope.submitForm = function(){
-        var url = $location.absUrl() + "postcustomer";
 
-        var config = {
-            headers : {
-                'Content-Type': 'application/json;charset=utf-8;'
-            }
+});
+
+
+fessmodule.$inject = ['$scope', '$filter'];
+
+fessmodule.directive("customSort", function() {
+return {
+    restrict: 'A',
+    transclude: true,
+    scope: {
+      order: '=',
+      sort: '='
+    },
+    template :
+      ' <a ng-click="sort_by(order)" style="color: #555555;">'+
+      '    <span ng-transclude></span>'+
+      '    <i ng-class="selectedCls(order)"></i>'+
+      '</a>',
+    link: function(scope) {
+
+    // change sorting order
+    scope.sort_by = function(newSortingOrder) {
+        var sort = scope.sort;
+
+        if (sort.sortingOrder == newSortingOrder){
+            sort.reverse = !sort.reverse;
         }
 
-        var data = {
-            firstName: $scope.firstname,
-            lastName: $scope.lastname
-        };
+        sort.sortingOrder = newSortingOrder;
+    };
 
 
-        $http.post(url, data, config).then(function (response) {
-            $scope.postResultMessage = "Sucessful!";
-        }, function (response) {
-            $scope.postResultMessage = "Fail!";
-        });
-
-        $scope.firstname = "";
-        $scope.lastname = "";
-    }
-});
-
-app.controller('getallcustomersController', function($scope, $http, $location) {
-
-    $scope.showAllCustomers = false;
-
-    $scope.getAllCustomers = function() {
-        var url = $location.absUrl() + "findall";
-
-        var config = {
-            headers : {
-                'Content-Type' : 'application/json;charset=utf-8;'
-            }
+    scope.selectedCls = function(column) {
+        if(column == scope.sort.sortingOrder){
+            return ('icon-chevron-' + ((scope.sort.reverse) ? 'down' : 'up'));
         }
-
-        $http.get(url, config).then(function(response) {
-
-            if (response.data.status == "Done") {
-                $scope.allcustomers = response.data;
-                $scope.showAllCustomers = true;
-
-            } else {
-                $scope.getResultMessage = "get All Customers Data Error!";
-            }
-
-        }, function(response) {
-            $scope.getResultMessage = "Fail!";
-        });
-
-    }
-});
-
-app.controller('getcustomerController', function($scope, $http, $location) {
-
-    $scope.showCustomer = false;
-
-    $scope.getCustomer = function() {
-        var url = $location.absUrl() + "customer/" + $scope.customerId;
-
-        var config = {
-            headers : {
-                'Content-Type' : 'application/json;charset=utf-8;'
-            }
+        else{
+            return'icon-sort'
         }
+    };
+  }// end link
+}
 
-        $http.get(url, config).then(function(response) {
 
-            if (response.data.status == "Done") {
-                $scope.customer = response.data;
-                $scope.showCustomer = true;
-
-            } else {
-                $scope.getResultMessage = "Customer Data Error!";
-            }
-
-        }, function(response) {
-            $scope.getResultMessage = "Fail!";
-        });
-
-    }
 });
 
-app.controller('getcustomersbylastnameController', function($scope, $http, $location) {
 
-    $scope.showCustomersByLastName = false;
-
-    $scope.getCustomersByLastName = function() {
-        var url = $location.absUrl() + "findbylastname";
-
-        var config = {
-            headers : {	'Content-Type' : 'application/json;charset=utf-8;' },
-
-            params: { 'lastName' : $scope.customerLastName }
-        }
-
-        $http.get(url, config).then(function(response) {
-
-            if (response.data.status == "Done") {
-                $scope.allcustomersbylastname = response.data;
-                $scope.showCustomersByLastName = true;
-
-            } else {
-                $scope.getResultMessage = "Customer Data Error!";
-            }
-
-        }, function(response) {
-            $scope.getResultMessage = "Fail!";
-        });
-
-    }
-});
-*/
