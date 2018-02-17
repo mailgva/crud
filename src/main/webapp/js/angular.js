@@ -179,10 +179,10 @@ return {
 
     scope.selectedCls = function(column) {
         if(column == scope.sort.sortingOrder){
-            return ('icon-chevron-' + ((scope.sort.reverse) ? 'down' : 'up'));
+            return ('glyphicon glyphicon-chevron-' + ((scope.sort.reverse) ? 'down' : 'up'));
         }
         else{
-            return'icon-sort'
+            return'glyphicon glyphicon-sort'
         }
     };
   }// end link
