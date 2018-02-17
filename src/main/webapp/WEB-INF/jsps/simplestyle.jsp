@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
-    <script src="/js/angularsimp.js?v=4"></script>
+    <script src="/js/angularsimp.js?v=8"></script>
 
 </head>
 <body>
@@ -66,6 +66,8 @@
     <br /> <br />
     <table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
                     <tr ng-repeat="row in books">
+                        <td title="'ID'" filter="{ id: 'text'}" sortable="'id'">
+                            {{row.id}}</td>
                         <td title="'Title'" filter="{ title: 'text'}" sortable="'title'">
                             {{row.title}}</td>
                         <td title="'Description'" filter="{ description: 'text'}" sortable="'description'">
@@ -78,7 +80,6 @@
                             {{row.printYear}}</td>
                         <td title="'Read'" filter="{ readalready: 'text'}" sortable="'readAlready'">
                             {{row.readAlready}}</td>
-
                     </tr>
      </table>
 

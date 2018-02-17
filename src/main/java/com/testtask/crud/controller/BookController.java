@@ -33,7 +33,11 @@ public class BookController {
     public @ResponseBody
     List<Book> getBooksByPartData(@PathVariable("part") String part) {
         // This returns a JSON or XML with the books
-        return bookRepository.getBooksByPartData(part);
+        if(part == null || part.isEmpty()) {
+            return bookRepository.findAll();
+        } else {
+            return bookRepository.getBooksByPartData(part);
+        }
     }
 
 
@@ -109,8 +113,9 @@ public class BookController {
     }
 
     @RequestMapping(value= "/books", method = RequestMethod.POST)
-    public void addBook(@RequestBody Book book) {
+    public @ResponseBody Book addBook(@RequestBody Book book) {
         bookRepository.save(book);
+        return book;
     }
 
     @RequestMapping(value= "/books/{id}", method = RequestMethod.GET)
@@ -119,7 +124,7 @@ public class BookController {
     }
 
     @RequestMapping(value= "/books/{id}", method = RequestMethod.PATCH)
-    public void updateBook(@PathVariable("id") long id, @RequestBody Book book) {
+    public @ResponseBody Book updateBook(@PathVariable("id") long id, @RequestBody Book book) {
         Book b = bookRepository.findOne(id);
         b.setTitle(book.getTitle());
         b.setDescription(book.getDescription());
@@ -128,11 +133,13 @@ public class BookController {
         b.setPrintYear(book.getPrintYear());
         b.setReadAlready(book.isReadAlready());
         bookRepository.saveAndFlush(b);
+        return b;
     }
 
-    @RequestMapping(value= "/books/{id}", method = RequestMethod.DELETE)
-    public void deleteBookById(@PathVariable("id") long id) {
+    @RequestMapping(value= "/books/delete/{id}", method = RequestMethod.GET)
+    public String deleteBookById(@PathVariable("id") long id) {
         bookRepository.delete(id);
+        return "redirect:/simplestyle";
     }
 
 }

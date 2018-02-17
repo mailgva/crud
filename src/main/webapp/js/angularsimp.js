@@ -102,11 +102,19 @@ app.service('BookCRUDService',['$http', function ($http) {
     }
 
     this.deleteBook = function deleteBook(id){
+            return $http({
+              method: 'GET',
+              url: 'books/delete/'+id
+            })
+        }
+    /*
+    this.deleteBook = function deleteBook(id){
         return $http({
           method: 'DELETE',
           url: 'books/'+id
         })
     }
+    */
 
     this.updateBook = function updateBook(id,title, description, author, isbn, printYear, readAlready){
         return $http({

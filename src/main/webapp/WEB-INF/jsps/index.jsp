@@ -14,14 +14,14 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-resource.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-route.js"></script>
         <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-
-    <script src="/js/angular.js?v=223"></script>
+    <script src="/js/angular.js?v=237"></script>
 </head>
 <body>
   <h3>List of Books</h3>
   <a href="/readonly"  class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Only View</a>
- <!-- <a href="/simplestyle"  class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Simple style</a> -->
+  <a href="/simplestyle"  class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Simple style</a>
   <a href="/edit/0"     class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Add new book</a>
         <div class="container" ng-app="app">
           <div ng-controller="getallbooksController" class="col-md-3" ng-init="getAllBooks()">
