@@ -1,5 +1,5 @@
-/*
 USE test;
+/*
 DROP TABLE IF EXISTS book;
 CREATE TABLE book (
   id int(11) NOT NULL AUTO_INCREMENT,

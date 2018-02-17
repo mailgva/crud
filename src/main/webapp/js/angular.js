@@ -54,7 +54,7 @@ app.controller('getallbooksController', function($scope, $http, $location, $filt
 
   // inserted script ====================================
     $scope.sort = {
-                                              sortingOrder : 'title',
+                                              sortingOrder : 'id',
                                               reverse : false
                                           };
 

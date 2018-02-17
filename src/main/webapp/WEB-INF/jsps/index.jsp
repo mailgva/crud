@@ -16,7 +16,7 @@
         <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    <script src="/js/angular.js?v=237"></script>
+    <script src="/js/angular.js?v=238"></script>
 </head>
 <body>
   <h3>List of Books</h3>
@@ -27,8 +27,8 @@
           <div ng-controller="getallbooksController" class="col-md-3" ng-init="getAllBooks()">
             <button ng-click="getAllBooks()" type="button" class="btn btn-primary btn-xs">Refresh</button><br />
             <label>Search: </label>
-            <input type="text" style="250px;" ng-model="searchData">
-            <button ng-click="getBooksByPartData()" type="button" class="btn btn-primary btn-xs">Ok</button>
+            <input type="text" style="250px;" ng-model="searchData" ng-change="getBooksByPartData()">
+            <!--<button ng-click="getBooksByPartData()" type="button" class="btn btn-primary btn-xs">Ok</button>-->
                 <table class="table table-striped table-condensed table-hover">
                 <thead>
 
